@@ -44,15 +44,19 @@ function activate(context) {
         return;
       }
 
+      const config = vscode.workspace.getConfiguration("dartBuilder");
+      const buildRunnerArgs = config.get(
+        "buildRunnerArgs",
+        "--delete-conflicting-outputs"
+      );
+
       // Create a new terminal or use an existing one, and run the command.
       const terminal = vscode.window.createTerminal({
         name: "Freezed Runner",
         cwd: projectRoot,
       });
 
-      terminal.sendText(
-        "dart run build_runner build --delete-conflicting-outputs"
-      );
+      terminal.sendText(`dart run build_runner build ${buildRunnerArgs}`);
 
       terminal.show();
     }
@@ -103,10 +107,27 @@ class FreezedCodeLensProvider {
     const text = document.getText();
     const lines = text.split("\n");
 
-    for (let i = 0; i < lines.length; i++) {
+    const config = vscode.workspace.getConfiguration("dartBuilder");
+    const customAnnotations = config.get("customAnnotations", []);
+    const defaultAnnotations = [
+      "@freezed",
+      "@riverpod",
+      "@Riverpod(.*)",
+      "@RoutePage",
+    ];
+    const allAnnotations = [...defaultAnnotations, ...customAnnotations];
+
+    const lineRegex = new RegExp(`^(${allAnnotations.join("|")})`, "i");
+
+    const limitInstanceCount = 3;
+    let instanceCount = 0;
+    for (
+      let i = 0;
+      i < lines.length || instanceCount >= limitInstanceCount;
+      i++
+    ) {
       const line = lines[i];
 
-      const lineRegex = /(@freezed|@riverpod|@Riverpod(.*)|@RoutePage)/i;
       const freezedMatch = line.match(lineRegex);
 
       if (freezedMatch) {
@@ -118,12 +139,13 @@ class FreezedCodeLensProvider {
         );
 
         const codeLens = new vscode.CodeLens(range, {
-          title: "🔨 Run build_runner",
+          title: "🚀 Run build_runner",
           command: "extension.runBuildRunnerForPackage",
           tooltip: "Run dart build_runner for this file",
         });
 
         codeLenses.push(codeLens);
+        instanceCount++;
       }
     }
 

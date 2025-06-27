@@ -24,7 +24,29 @@ You can access this command in two ways:
 
 2. Right-click inside any Dart file editor
 
-## Installation and Setup
+## Customisation
+You can customize the extension behavior through VS Code settings:
+
+#### Build Runner Arguments
+Additional arguments to pass to the `dart run build_runner build` command
+- **Setting**: `dartBuilder.buildRunnerArgs`
+- **Default**: `--delete-conflicting-outputs`
+
+#### Custom Annotations
+Add custom annotations that should trigger the build runner command
+- **Setting**: `dartBuilder.customAnnotations`
+- **Default**: `[]` (empty array)
+
+Example:
+```json
+{
+  "dartBuilder.buildRunnerArgs": "--delete-conflicting-outputs --verbose",
+  "dartBuilder.customAnnotations": ["@MyCustomAnnotation", "@GenerateCode"]
+}
+```
+
+
+### Installation and Setup
 To use this extension locally without publishing it:
 
 1. **Install Node.js**

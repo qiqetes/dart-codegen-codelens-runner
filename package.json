@@ -1,9 +1,14 @@
 {
   "name": "dart-codegen-codelens-runner",
-  "displayName": "Dart Codegen Runner",
+  "displayName": "Dart Codegen Codelens Runner",
   "description": "Lightweight extension that speeds up the development of Dart projects by running build_runner commands for the current package with @freezed, @riverpod, or @RoutePage annotations.",
-  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qiqetes/dart-codegen-codelens-runner.git"
+  },
+  "version": "1.0.1",
   "publisher": "qiqetes",
+  "icon": "logo.png",
   "engines": {
     "vscode": "^1.80.0"
   },
@@ -29,6 +34,24 @@
           "group": "navigation"
         }
       ]
+    },
+    "configuration": {
+      "title": "Dart Codegen Codelens Runner Extension",
+      "properties": {
+        "dartBuilder.buildRunnerArgs": {
+          "type": "string",
+          "default": "--delete-conflicting-outputs",
+          "description": "Additional arguments to pass to dart run build_runner build command"
+        },
+        "dartBuilder.customAnnotations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Additional annotations to trigger build runner (e.g., @MyCustomAnnotation)"
+        }
+      }
     }
   },
   "devDependencies": {
