@@ -1,0 +1,37 @@
+{
+  "name": "dart-codegen-runner",
+  "displayName": "Dart Codegen Runner",
+  "description": "Lightweight extension that speeds up the development of Dart projects by running build_runner commands for the current package with @freezed, @riverpod, or @RoutePage annotations.",
+  "version": "1.0.0",
+  "publisher": "vscode-user",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:dart"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.runBuildRunnerForPackage",
+        "title": "Freezed: Run Build Runner"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceLangId == dart",
+          "command": "extension.runBuildRunnerForPackage",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "eslint": "^9.29.0"
+  }
+}
