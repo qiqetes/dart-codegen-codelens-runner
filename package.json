@@ -3,7 +3,7 @@
   "displayName": "Dart Codegen Runner",
   "description": "Lightweight extension that speeds up the development of Dart projects by running build_runner commands for the current package with @freezed, @riverpod, or @RoutePage annotations.",
   "version": "1.0.0",
-  "publisher": "vscode-user",
+  "publisher": "qiqetes",
   "engines": {
     "vscode": "^1.80.0"
   },
